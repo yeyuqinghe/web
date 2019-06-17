@@ -1,0 +1,106 @@
+<html>
+<head>
+  <style>
+  td {
+    height: 3em;
+    width: 3em;
+    text-align: center;
+    padding-top: 25px;
+    box-shadow: 3px 3px 2px 2px #5c287a;
+  }
+
+  td:hover {
+    position: relative;
+    top:6px;
+    left:6px;
+    background-color:rgb(147, 192, 235);
+  }
+
+  .cell {
+    height: 5em;
+    width: 14em;
+  }
+
+  .cell > .detail {
+    display: none;
+  }
+
+  .cell > .detail.open {
+    display: block;
+    position: absolute;
+    height: 12em;
+    width: 12em;
+    background-color: rgb(245, 227, 127);
+  }
+  </style>
+</head>
+
+<body>
+  <table id="grid">
+   <caption><b><big>18-19-2学期 信息17课程表</big></b></caption>
+   <br/>
+  </table>
+  <script>
+   let outschedule = Array(" ", "<big><b>星期一</b></big>", "<big><b>星期二</b></big>", "<big><b>星期三</b></big>", "<big><b>星期四</b></big>", "<big><b>星期五</b></big>",
+      "<big><b>第一大节</b></big>", "web应用开发技术_01", "西方文化简史_01", "管理信息系统_02 ", "数据库原理及应用_01（双周）<br/>运营管理_02（单周）", "", 
+      "<big><b>第二大节</b></big>", "毛泽东思想与中国特色社会主义理论体系概论_13", "管理科学基础_01", "毛泽东思想与中国特色社会主义理论体系概论_13", "管理科学基础_01", "运营管理_02",	
+      "","","<big><b>午</b></big>","<big><b>休</b></big>","","",   
+      "<big><b>第三大节</b></big>", "管理信息系统_02", "形势与政策2_41", "会计学_01", "体育（四）", "毛泽东思想与中国特色社会主义理论体系概论_13", 
+      "<big><b>第四大节</b></big>", "电子商务_01", "数据库原理及应用_01", "", "会计学_01", "", 
+       );
+    let inschedule = Array(" ", "星期一", "星期二", "星期三", "星期四", "星期五",
+      "第一大节<br/>(8:20-10:00)", "第一公共教学楼C411 <br/>上课教师：吕成功 <br/>周数：1~15周 <br/>节数：周一1-2节 <br/>必修", "第一公共教学楼C311 <br/>上课老师：张金柱 <br/>周数：1~17周<br/>节数：周二1-2节 <br/>高选",
+              "第一公共教学楼C105 <br/>上课老师：刘烨（单周）<br/>周数：1~15周 <br/>节数：周三1-2节 <br/>必修", "第一公共教学楼B405 <br/>上课老师：吴君（双周）<br/>刘亮（单周）<br/>周数：1~15周 <br/>节数：周四1-2节 <br/>必修", "无课", 
+      "第二大节<br/>(10:20-12:00)", "第一公共教学楼A120 <br/>上课老师：顾洪英 <br/>周数：1~16周<br/>节数：周一3-4节 <br/>必修", "第一公共教学楼C411 <br/>上课老师：赵方方 <br/>周数：3~17周 <br/>节数：周二3-4节 <br/>必修",
+              "第一公共教学楼A120 <br/>上课老师：顾洪英 <br/>周数：1~16周 <br/>节数：周三3-4节 <br/>必修", "第一公共教学楼C411 <br/>上课老师：赵方方 <br/>周数：3~17周 <br/>节数：周四3-4节 <br/>必修", "第一公共教学楼B405 <br/>上课老师：刘亮 <br/>周数：1~15周 <br/>节数：周五3-4节 <br/>必修", 
+               " 午休<br/>12:00-14:00 ","午休<br/>12:00-14:00 "," 午休<br/>12:00-14:00 ","午休<br/>12:00-14:00 "," 午休<br/>12:00-14:00 ","午休<br/>12:00-14:00  ",
+      "第三大节<br/>(14:00-15:40)", "第一公共教学楼C105 <br/>上课老师：刘烨 <br/>周数：1~15周 <br/>节数：周一5-6节 <br/>必修", "第一公共教学楼C123 <br/>上课老师：李坤 <br/>周数：5~7周 <br/>节数：周二5-6节 <br/>必修",
+              "第一公共教学楼B101 <br/>上课老师：刘晓晖（单周）<br/>周数：1~17周 <br/>节数：周三5-6节 <br/>必修", "体育馆 <br/>上课老师：薛松 <br/>周数：1~15周 <br/>节数：周四5-6节 <br/>必修", "第一公共教学楼A120 <br/>上课老师：顾洪英 <br/>周数：1~16周 <br/>节数：周五5-6节 <br/>必修", 
+      "第四大节<br/>(16:00-17:40)", "第一公共教学楼B303 <br/>上课老师：张亮 <br/>周数：3~17周 <br/>节数：周一7-8节 <br/>系任选","第一公共教学楼C109 <br/>上课老师：吴君 <br/>周数：1~15周 <br/>节数：周二7-8节 <br/>必修", "无课",
+             "第一公共教学楼B101 <br/>上课老师：刘晓晖 <br/>周数：1~17周 <br/>节数：周四7-8节 <br/>必修", "无课");
+
+    let tblEl = document.getElementById('grid');
+    for (let i = 0; i < 6; i++) {
+      let trEl = document.createElement('tr');
+      for (let j = 0; j < 6; j++) {
+        let tdEl = document.createElement('td');
+        let divEl = document.createElement('div')
+        divEl.className = 'cell';
+        
+        let detailDivEl = document.createElement('div');
+        detailDivEl.className = 'detail';
+        detailDivEl.innerHTML = inschedule[6*i+j];
+
+        detailDivEl.onmouseout =function(event) {
+          let names = detailDivEl.className.split(' ');
+          names = names.filter((x) => x != 'open')
+          detailDivEl.className = names.join(' ');
+        }
+        divEl.append(detailDivEl);
+
+        let briefDivEl = document.createElement('div');
+        briefDivEl.innerHTML =outschedule[6*i+j];
+        divEl.append(briefDivEl);
+
+        tdEl.onclick = function(event) {
+          let names = detailDivEl.className.split(' ');
+
+          if (names.indexOf('open') >= 0) {
+            names = names.filter((x) => x != 'open')
+          } else {
+            names.push('open');
+          }
+
+          detailDivEl.className = names.join(' ');
+        };
+
+        tdEl.append(divEl);
+        trEl.append(tdEl);
+      }
+      tblEl.append(trEl);
+    }
+
+  </script>
+</body>
+
+</html>
